@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.abc.explore.entity.dao.TrendingDao">
+
+    <resultMap id="TrendingMap" type="net.abc.explore.entity.Trending">
+        <id property="id" column="id"/>
+        <result property="repositorieId" column="repositorie_id"/>
+        <result property="occurTime" column="occur_time"/>
+        <result property="timeCode" column="time_code"/>
+        <result property="languageCode" column="language_code"/>
+        <result property="rank" column="rank"/>
+        <result property="star" column="star"/>
+        <result property="fork" column="fork"/>
+        <result property="newStar" column="new_star"/>
+    </resultMap>
+
+    <insert id="add" parameterType="net.abc.explore.entity.Trending" keyProperty="id" useGeneratedKeys="true">
+        insert into trending
+            (
+                repositorie_id, occur_time, time_code, language_code, rank, star, fork, new_star
+            )
+        values
+            (
+             #{repositorieId}, #{occurTime}, #{timeCode}, #{languageCode}, #{rank}, #{star}, #{fork}, #{newStar}
+            )
+    </insert>
+
+    <update id="update" parameterType="net.abc.explore.entity.Trending">
+        update trending set
+            rank = #{rank},
+            star = #{star},
+            fork = #{fork},
+            new_star = #{newStar}
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="net.abc.explore.entity.Trending">
+        delete from trending where time_code = #{timeCode} and language_code = #{languageCode} and occur_time = #{occurTime}
+    </delete>
+
+    <select id="getTrending" resultMap="TrendingMap">
+        select id, repositorie_id, occur_time, time_code, langulate_code, rank, star, fork, new_star
+        from trending
+        <where>
+            <if test="timeCode != null">
+                time_code = #{timeCode}
+            </if>
+            <if test="languageCode != null">
+                and language_code = #{languageCode}
+            </if>
+            <if test="occurTime != null">
+                and occur_time = #{occurTime}
+            </if>
+            <if test="repositorieId != null">
+                and repositorie_id = #{repositorieId}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.abc.explore.entity.dao.LanguageCodeDao">
+
+    <resultMap id="LanguageCodeMap" type="net.abc.explore.entity.LanguageCode">
+        <id property="code" column="code"/>
+        <id property="aliasName" column="alias_name"/>
+        <id property="name" column="name"/>
+    </resultMap>
+
+    <select id="getAllLanguageCode" resultMap="LanguageCodeMap">
+        select
+          code, alias_name, `name`
+        from
+            language_code
+    </select>
+
+    <select id="getLanguageCodeByCode" resultType="net.abc.explore.entity.LanguageCode">
+        select
+            code, alias_name, `name`
+        from
+            language_code
+        where code = #{code}
+    </select>
+
+    <select id="getLanguageCodeByAliasName" resultType="net.abc.explore.entity.LanguageCode">
+        select
+            code, alias_name, `name`
+        from
+            language_code
+        where alias_name = #{aliasName}
+    </select>
+
+    <select id="getLanguageCodeByName" resultType="net.abc.explore.entity.LanguageCode">
+        select
+            code, alias_name, `name`
+        from
+            language_code
+        where name = #{name}
+    </select>
+</mapper>

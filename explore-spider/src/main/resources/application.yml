@@ -1,0 +1,5 @@
+gecco:
+  class-path: net.abc.explore.spider.gecco
+  pipeline:
+    print:
+      enabled: true
