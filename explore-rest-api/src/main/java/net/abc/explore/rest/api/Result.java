@@ -1,6 +1,8 @@
 package net.abc.explore.rest.api;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.web.servlet.View;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +15,17 @@ import java.util.Map;
 public class Result implements java.io.Serializable {
 
     private static final long serialVersionUID = -7550423847540881334L;
+
+    @ApiModelProperty(value = "总页数")
     private Integer pageCount;
 
-    // 默认10
+    @ApiModelProperty(value = "每页行数")
     private Integer pageSize;
 
+    @ApiModelProperty(value = "当前页")
     private Integer pageIndex;
 
+    @ApiModelProperty(value = "总数据行数")
     private Integer dataCount;
 
     /**
@@ -158,8 +164,9 @@ public class Result implements java.io.Serializable {
         this.dataCount = dataCount;
         // 总页数计算
         this.pageCount = this.dataCount / pageSize;
-        if(this.dataCount % pageSize != 0)
-            this.pageCount ++;
+        if(this.dataCount % pageSize != 0) {
+            this.pageCount++;
+        }
     }
 
     public int getCode() {

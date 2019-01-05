@@ -1,6 +1,6 @@
 package net.abc.explore.rest.api.filter;
 
-import com.bobandata.web.common.Result;
+import net.abc.explore.rest.api.Result;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -28,8 +28,7 @@ public class ResultFilter implements Filter {
         Result result = new Result();
 
         // 分页处理
-        pageHandle(servletRequest, servletResponse, result);
-
+//        pageHandle(servletRequest, servletResponse, result);
         servletRequest.setAttribute("result", result);
         filterChain.doFilter(servletRequest, servletResponse);
     }

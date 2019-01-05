@@ -3,3 +3,26 @@ gecco:
   pipeline:
     print:
       enabled: true
+  n-threand: 4
+
+# mysql
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://192.168.0.127:3306/github_explore?characterEncoding=utf-8
+      username: root
+      password: root.2019
+      driver-class-name: com.mysql.jdbc.Driver
+      max-active: 10
+      min-idle: 3
+      initial-size: 5
+mybatis:
+  mapper-locations: classpath:explore-dao-mapper/*.xml
+  type-aliases-package: net.abc.explore.entity
+
+# mybatis sql 打印
+#logging:
+#  level:
+#    net:
+#      abc:
+#        explore: debug

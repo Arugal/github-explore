@@ -13,9 +13,9 @@ import java.util.List;
  * @author: zhangwei
  * @date: 14:00/2019-01-01
  */
-@Gecco(matchUrl = "https://github.com/trending/{languages}?since={time}", pipelines = "PrintPipline")
+@Gecco(matchUrl = "https://github.com/trending/{languages}?since={time}", pipelines = {"PrintPipeline", "TrendingPipeline"})
 @Data
-public class GithubBean implements HtmlBean {
+public class TrendingBean implements HtmlBean {
     private static final long serialVersionUID = 7604223689378270484L;
 
     @RequestParameter("languages")

@@ -1,7 +1,7 @@
 /**
  * Copyright &copy; 2012-2016 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
  */
-package net.abc.explore.rest.api.common;
+package net.abc.explore.rest.api.mapper;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -19,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -36,6 +37,8 @@ public class JsonMapper extends ObjectMapper {
 	private static Log logger = LogFactory.getLog(JsonMapper.class);
 
 	private static JsonMapper mapper;
+
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public JsonMapper() {
 		this(Include.NON_EMPTY);
@@ -73,7 +76,8 @@ public class JsonMapper extends ObjectMapper {
 		// 设置时区
 		this.setTimeZone(TimeZone.getDefault());//getTimeZone("GMT+8:00")
 
-
+		// 设置 data format
+		setDateFormat(DATE_FORMAT);
 	}
 
 	/**

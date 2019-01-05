@@ -42,7 +42,7 @@
     </delete>
 
     <select id="getTrending" resultMap="TrendingMap">
-        select id, repositorie_id, occur_time, time_code, langulate_code, rank, star, fork, new_star
+        select id, repositorie_id, occur_time, time_code, language_code, rank, star, fork, new_star
         from trending
         <where>
             <if test="timeCode != null">

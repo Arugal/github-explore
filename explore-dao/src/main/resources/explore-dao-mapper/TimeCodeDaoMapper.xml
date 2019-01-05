@@ -9,18 +9,20 @@
         <id property="code" column="code"/>
         <id property="aliasName" column="alias_name"/>
         <id property="name" column="name"/>
+        <result property="interval" column="interval"/>
+        <result property="timeUnit" column="time_unit"/>
     </resultMap>
 
     <select id="getAllTimeCode" resultMap="TimeCodeMap">
         select
-            code, alias_name, `name`, `interval`
+            code, alias_name, `name`, `interval`, time_unit
         from
             time_code
     </select>
 
     <select id="getTimeCodeByCode" resultType="net.abc.explore.entity.TimeCode">
         select
-            code, alias_name, `name`, `interval`
+            code, alias_name, `name`, `interval`, time_unit
         from
             time_code
         where code = #{code}
@@ -28,7 +30,7 @@
 
     <select id="getTimeCodeByAliasName" resultType="net.abc.explore.entity.TimeCode">
         select
-            code, alias_name, `name`, `interval`
+            code, alias_name, `name`, `interval`, time_unit
         from
             time_code
         where alias_name = #{aliasName}
@@ -36,7 +38,7 @@
 
     <select id="getTimeCodeByName" resultType="net.abc.explore.entity.TimeCode">
         select
-            code, alias_name, `name`, `interval`
+            code, alias_name, `name`, `interval`, time_unit
         from
             time_code
         where name = #{name}
