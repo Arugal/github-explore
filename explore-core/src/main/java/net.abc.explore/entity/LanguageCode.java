@@ -2,6 +2,8 @@ package net.abc.explore.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.abc.tool.util.base.ObjectUtils;
+import net.abc.tool.util.string.StringUtils;
 
 /**
  * @author: zhangwei
@@ -19,10 +21,13 @@ public class LanguageCode implements java.io.Serializable{
 
     private String name;
 
-    public LanguageCode(Short code, String aliasName, String name) {
+    private String color;
+
+    public LanguageCode(Short code, String aliasName, String name, String color) {
         this.code = code;
         this.aliasName = aliasName;
         this.name = name;
+        this.color = color;
     }
 
     @Override
@@ -32,16 +37,31 @@ public class LanguageCode implements java.io.Serializable{
 
         LanguageCode that = (LanguageCode) o;
 
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (aliasName != null ? !aliasName.equals(that.aliasName) : that.aliasName != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+        return code != null ? code.equals(that.code) : that.code == null;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (aliasName != null ? aliasName.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
+        return code != null ? code.hashCode() : 0;
     }
+
+    public static boolean NullCheck(LanguageCode code){
+        if(code == null){
+            return false;
+        }
+        if(ObjectUtils.isEmpty(code.code)){
+            return false;
+        }
+        if(StringUtils.isEmpty(code.aliasName)){
+            return false;
+        }
+        if(StringUtils.isEmpty(code.name)){
+            return false;
+        }
+        if(StringUtils.isEmpty(code.color)){
+            return false;
+        }
+        return true;
+    }
+
 }

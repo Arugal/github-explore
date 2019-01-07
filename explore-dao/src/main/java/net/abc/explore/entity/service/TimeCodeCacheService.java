@@ -1,12 +1,13 @@
 package net.abc.explore.entity.service;
 
 import net.abc.explore.entity.TimeCode;
+import net.abc.explore.entity.dao.TimeCodeDao;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -16,18 +17,19 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @date: 20:09/2019-01-04
  */
 @Component
+@Lazy
 public class TimeCodeCacheService extends TimeCodeService {
 
-    private static final Set<TimeCode> TIME_CODES = new CopyOnWriteArraySet<>();
+    private final List<TimeCode> TIME_CODES = new CopyOnWriteArrayList<>();
+
+    public TimeCodeCacheService(TimeCodeDao timeCodeDao) {
+        this.timeCodeDao = timeCodeDao;
+        reLoad();
+    }
 
     @Override
     public List<TimeCode> getAllTimeCode() {
-        List<TimeCode> cacheList = new ArrayList<>(TIME_CODES);
-        if(cacheList.isEmpty()){
-            cacheList = super.getAllTimeCode();
-            TIME_CODES.addAll(cacheList);
-        }
-        return super.getAllTimeCode();
+        return Collections.unmodifiableList(TIME_CODES);
     }
 
     @Override
@@ -37,11 +39,7 @@ public class TimeCodeCacheService extends TimeCodeService {
                 return code1;
             }
         }
-        TimeCode code1 = super.getTimeCodeByCode(code);
-        if(code1 != null){
-            TIME_CODES.add(code1);
-        }
-        return code1;
+        return null;
     }
 
     @Override
@@ -51,11 +49,7 @@ public class TimeCodeCacheService extends TimeCodeService {
                 return code;
             }
         }
-        TimeCode code = super.getTimeCodeByAliasName(aliasName);
-        if(code != null){
-            TIME_CODES.add(code);
-        }
-        return code;
+        return null;
     }
 
     @Override
@@ -65,15 +59,16 @@ public class TimeCodeCacheService extends TimeCodeService {
                 return code;
             }
         }
-        TimeCode code = super.getTimeCodeByName(name);
-        if(code != null){
-            TIME_CODES.add(code);
-        }
-        return code;
+        return null;
     }
 
 
     public void clear(){
         TIME_CODES.clear();
+    }
+
+    public void reLoad(){
+        clear();
+        TIME_CODES.addAll(super.getAllTimeCode());
     }
 }

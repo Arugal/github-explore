@@ -1,5 +1,6 @@
 package net.abc.explore.spider.gecco.bean;
 
+import com.geccocrawler.gecco.annotation.Html;
 import com.geccocrawler.gecco.annotation.HtmlField;
 import com.geccocrawler.gecco.annotation.Text;
 import com.geccocrawler.gecco.spider.HtmlBean;
@@ -22,7 +23,7 @@ public class RepositorieBean implements HtmlBean {
     @HtmlField(cssPath = "div.d-inline-block.col-9.mb-1 > h3 > a")
     private String name;
 
-    @Text
+    @Html
     @HtmlField(cssPath = "div.py-1 > p")
     private String describe;
 

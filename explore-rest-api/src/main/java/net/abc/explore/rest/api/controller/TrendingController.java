@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import net.abc.explore.entity.Trending;
 import net.abc.explore.entity.service.TrendingDaoCacheService;
+import net.abc.explore.entity.service.TrendingDaoService;
 import net.abc.explore.rest.api.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,9 @@ public class TrendingController {
 
     @Autowired
     private TrendingDaoCacheService trendingDaoCacheService;
+
+    @Autowired
+    private TrendingDaoService trendingDaoService;
 
     @ApiOperation(value = "trending 查询")
     @RequestMapping(value = "/{languageCode}", method = RequestMethod.GET)

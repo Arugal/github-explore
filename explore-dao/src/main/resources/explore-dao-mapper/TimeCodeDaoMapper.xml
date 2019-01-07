@@ -6,9 +6,9 @@
 <mapper namespace="net.abc.explore.entity.dao.TimeCodeDao">
 
     <resultMap id="TimeCodeMap" type="net.abc.explore.entity.TimeCode">
-        <id property="code" column="code"/>
-        <id property="aliasName" column="alias_name"/>
-        <id property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="aliasName" column="alias_name"/>
+        <result property="name" column="name"/>
         <result property="interval" column="interval"/>
         <result property="timeUnit" column="time_unit"/>
     </resultMap>

@@ -46,6 +46,11 @@ public class Trending implements java.io.Serializable, Comparable<Trending>{
     private Short rank;
 
     /**
+     * 上一个排名
+     */
+    private Short lastRank;
+
+    /**
      * star 数量
      */
     private Integer star;

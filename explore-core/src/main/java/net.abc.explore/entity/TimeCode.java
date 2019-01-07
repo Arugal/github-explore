@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import net.abc.explore.constant.ETimeCode;
 import net.abc.tool.util.date.DateUtil;
 import net.abc.tool.util.date.ETimeUnit;
+import net.abc.tool.util.string.StringUtils;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -46,21 +47,12 @@ public class TimeCode implements java.io.Serializable{
 
         TimeCode timeCode = (TimeCode) o;
 
-        if (code != null ? !code.equals(timeCode.code) : timeCode.code != null) return false;
-        if (aliasName != null ? !aliasName.equals(timeCode.aliasName) : timeCode.aliasName != null) return false;
-        if (name != null ? !name.equals(timeCode.name) : timeCode.name != null) return false;
-        if (interval != null ? !interval.equals(timeCode.interval) : timeCode.interval != null) return false;
-        return timeUnit != null ? timeUnit.equals(timeCode.timeUnit) : timeCode.timeUnit == null;
+        return code != null ? code.equals(timeCode.code) : timeCode.code == null;
     }
 
     @Override
     public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (aliasName != null ? aliasName.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (interval != null ? interval.hashCode() : 0);
-        result = 31 * result + (timeUnit != null ? timeUnit.hashCode() : 0);
-        return result;
+        return code != null ? code.hashCode() : 0;
     }
 
     public void setTimeUnit(String timeUnit) {
@@ -99,5 +91,22 @@ public class TimeCode implements java.io.Serializable{
             }
         }
         return currentTime;
+    }
+
+    public static boolean check(TimeCode code){
+        if(code == null){
+            return false;
+        }
+        if(code.code == null){
+            return false;
+        }
+        if(StringUtils.isEmpty(code.aliasName)){
+            return false;
+        }
+        if(StringUtils.isEmpty(code.name)){
+            return false;
+        }
+
+        return true;
     }
 }

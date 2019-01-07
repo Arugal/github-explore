@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ *
+ * 将 trending 查询结果缓存,根据 timeCode interval 字段自动失效,判断失效后如果上一个失效周期存在引用，则重新刷新缓存
+ * 否则直接删除数据
  * @author: zhangwei
  * @date: 21:05/2019-01-05
  */
@@ -27,7 +30,7 @@ public class TrendingDaoCacheService extends TrendingDaoService {
 
     private static final Log log = LogFactory.getLog(TrendingDaoCacheService.class);
 
-    private static final long CACHE_INTERVAL = TimeUnit.MINUTES.toMicros(5);
+    private static final long CACHE_INTERVAL = TimeUnit.MINUTES.toMillis(5);
 
     private final Thread cacheThread = new Thread(new Runnable() {
         @Override

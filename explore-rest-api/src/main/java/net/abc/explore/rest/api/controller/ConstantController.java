@@ -30,7 +30,7 @@ public class ConstantController {
     private LanguageCodeCacheService languageCodeCacheService;
 
     @ApiOperation(value = "timeCode 查询")
-    @RequestMapping(value = "/timcCode", method = RequestMethod.GET)
+    @RequestMapping(value = "/timeCode", method = RequestMethod.GET)
     public Result getTimeCode(Result result){
         List<TimeCode> timeCodes = timeCodeCacheService.getAllTimeCode();
         result.addData("timeCode", timeCodes, true);

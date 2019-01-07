@@ -15,7 +15,7 @@ import java.util.List;
 public class TimeCodeService{
 
     @Autowired
-    private TimeCodeDao timeCodeDao;
+    protected TimeCodeDao timeCodeDao;
 
     public List<TimeCode> getAllTimeCode() {
         return timeCodeDao.getAllTimeCode();

@@ -70,8 +70,12 @@ public class TrendingDaoService {
                 if(lastTime == null || lastTime.getTime() - formerly.getOccurTime().getTime() == one_time){
                     lastTime = formerly.getOccurTime();
                     consecutiveDays++;
+                    if(consecutiveDays == 2){
+                        trending.setLastRank(formerly.getRank());
+                    }
+                }else {
+                    break;
                 }
-                break;
             }
             trending.setNew(false);
             trending.setConsecutiveDays(consecutiveDays);
