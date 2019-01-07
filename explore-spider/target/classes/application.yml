@@ -1,5 +1,9 @@
-server:
-  port: 9010
+gecco:
+  class-path: net.abc.explore.spider.gecco
+  pipeline:
+    print:
+      enabled: true
+  n-threand: 4
 
 # mysql
 spring:
@@ -12,26 +16,13 @@ spring:
       max-active: 10
       min-idle: 3
       initial-size: 5
-  aop:
-    proxy-target-class: true
 mybatis:
   mapper-locations: classpath:explore-dao-mapper/*.xml
   type-aliases-package: net.abc.explore.entity
 
 # mybatis sql 打印
-logging:
-  level:
-    net:
-      abc:
-        explore: info
-
-# swagger
-swagger:
-  enabled: false
-  title: explore-rest-api
-  description: api list
-  version: 1.0-SNAPSHOT
-  contact:
-    name: zhangwei
-    email: pknfe@outlook.com
-  base-package: net.abc.explore.rest.api.controller
+#logging:
+#  level:
+#    net:
+#      abc:
+#        explore: debug

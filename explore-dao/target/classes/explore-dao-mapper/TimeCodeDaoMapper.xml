@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.abc.explore.entity.dao.TimeCodeDao">
+
+    <resultMap id="TimeCodeMap" type="net.abc.explore.entity.TimeCode">
+        <result property="code" column="code"/>
+        <result property="aliasName" column="alias_name"/>
+        <result property="name" column="name"/>
+        <result property="interval" column="interval"/>
+        <result property="timeUnit" column="time_unit"/>
+    </resultMap>
+
+    <select id="getAllTimeCode" resultMap="TimeCodeMap">
+        select
+            code, alias_name, `name`, `interval`, time_unit
+        from
+            time_code
+    </select>
+
+    <select id="getTimeCodeByCode" resultType="net.abc.explore.entity.TimeCode">
+        select
+            code, alias_name, `name`, `interval`, time_unit
+        from
+            time_code
+        where code = #{code}
+    </select>
+
+    <select id="getTimeCodeByAliasName" resultType="net.abc.explore.entity.TimeCode">
+        select
+            code, alias_name, `name`, `interval`, time_unit
+        from
+            time_code
+        where alias_name = #{aliasName}
+    </select>
+
+    <select id="getTimeCodeByName" resultType="net.abc.explore.entity.TimeCode">
+        select
+            code, alias_name, `name`, `interval`, time_unit
+        from
+            time_code
+        where name = #{name}
+    </select>
+</mapper>

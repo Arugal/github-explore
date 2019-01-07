@@ -126,11 +126,11 @@
                   <img src="../../../static/plus.png" class="status-img">
                 </span>
                 <span v-else-if="trending.lastRank > trending.rank">
-                  <img src="../../../static/fall.png" class="status-img">
+                  <img src="../../../static/rise.png" class="status-img">
                   {{trending.lastRank - trending.rank}}
                 </span>
                 <span v-else-if="trending.lastRank < trending.rank">
-                  <img src="../../../static/rise.png" class="status-img">
+                  <img src="../../../static/fall.png" class="status-img">
                   {{trending.rank - trending.lastRank}}
                 </span>
                 <span v-else>
@@ -150,8 +150,9 @@ import { get } from "../../common/js/axiosi.js";
 import { getCookie } from "../../common/js/util.js";
 import { setCookie } from "../../common/js/util.js";
 
-var cookieTimeCodeName = 'cookie_time_code';
-var cookieLanguageCodeName = 'cookie_language_code';
+var cookieTimeCodeName = "cookie_time_code";
+var cookieLanguageCodeName = "cookie_language_code";
+var cookieTimeOut = 7; // days
 
 export default {
   name: "Trending",
@@ -179,10 +180,6 @@ export default {
         this.timeCodes.forEach(element => {
           this.timeCodeMap[element.name] = element.aliasName;
         });
-        var cookieTimeCode = getCookie(cookieTimeCodeName)
-        if(cookieTimeCode != undefined){
-            this.timeCodeValue = cookieTimeCode;
-        }
       });
     },
     languageCode: function() {
@@ -194,11 +191,17 @@ export default {
             aliasName: element.aliasName
           };
         });
-        var cookieLanguageCode = getCookie(cookieLanguageCodeName)
-        if(cookieLanguageCode != undefined){
-            this.languageCodeValue = cookieLanguageCode
-        }
       });
+    },
+    codeInitByCookie: function() {
+      var cookieTimeCode = getCookie(cookieTimeCodeName);
+      if (cookieTimeCode != undefined) {
+        this.timeCodeValue = cookieTimeCode;
+      }
+      var cookieLanguageCode = getCookie(cookieLanguageCodeName);
+      if (cookieLanguageCode != undefined) {
+        this.languageCodeValue = cookieLanguageCode;
+      }
     },
     trending: function() {
       get("/trending/" + this.languageCodeValue, {
@@ -217,16 +220,17 @@ export default {
       this.languageCodeAliasName = this.languageCodeMap[
         this.languageCodeValue
       ].aliasName;
-      setCookie(cookieLanguageCodeName, this.languageCodeValue);
+      setCookie(cookieLanguageCodeName, this.languageCodeValue, cookieTimeOut);
       this.codeChange();
     },
     timeCodeChange: function() {
       this.timeCodeAliasName = this.timeCodeMap[this.timeCodeValue];
-      setCookie(cookieTimeCodeName, this.timeCodeValue)
+      setCookie(cookieTimeCodeName, this.timeCodeValue, cookieTimeOut);
       this.codeChange();
     }
   },
   mounted() {
+    this.codeInitByCookie();
     this.languageCode();
     this.timeCode();
     this.trending();
@@ -329,7 +333,7 @@ export default {
 }
 
 .mr-3 {
-  margin-right: 16px !important;
+  margin-right: 11px !important;
 }
 a {
   background-color: transparent;
