@@ -55,7 +55,7 @@
             </div>
             <div class="f6 text-gray mt-2">
               <span class="d-inline-block mr-3">
-                <span class="repo-language-color ml-0" v-bind:style="languageSpan"></span>
+                <span class="repo-language-color ml-0" v-bind:style="languageSpan" style="position: relative; top:-0.5px"></span>
                 <span itemprop="programmingLanguage">{{languageCodeAliasName}}</span>
               </span>
               
@@ -195,11 +195,11 @@ export default {
     },
     codeInitByCookie: function() {
       var cookieTimeCode = getCookie(cookieTimeCodeName);
-      if (cookieTimeCode != undefined) {
+      if (cookieTimeCode != undefined && cookieTimeCode != '') {
         this.timeCodeValue = cookieTimeCode;
       }
       var cookieLanguageCode = getCookie(cookieLanguageCodeName);
-      if (cookieLanguageCode != undefined) {
+      if (cookieLanguageCode != undefined && cookieLanguageCode != '') {
         this.languageCodeValue = cookieLanguageCode;
       }
     },
@@ -364,5 +364,12 @@ a {
 .status-img {
   height: 15px;
   width: 15px;
+  position: relative;
+  top: 3px;
+  
+}
+svg{
+  position: relative;
+  top: 2px;
 }
 </style>
