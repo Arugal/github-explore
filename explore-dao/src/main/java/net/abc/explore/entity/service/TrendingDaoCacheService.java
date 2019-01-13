@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
- * 将 trending 查询结果缓存,根据 timeCode interval 字段自动失效,判断失效后如果上一个失效周期存在引用，则重新刷新缓存
+ * 将 trending 查询结果缓存,根据 timeCode interval 字段自动失效,判断失效后如果上一个周期内存在引用，则重新刷新缓存
  * 否则直接删除数据
  * @author: zhangwei
  * @date: 21:05/2019-01-05
@@ -26,11 +26,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Lazy
 public class TrendingDaoCacheService extends TrendingDaoService {
 
-    private static final Map<String, TrendingCache> TRENDING_CACHE = new ConcurrentHashMap<>();
+    private final Map<String, TrendingCache> TRENDING_CACHE = new ConcurrentHashMap<>();
 
     private static final Log log = LogFactory.getLog(TrendingDaoCacheService.class);
 
-    private static final long CACHE_INTERVAL = TimeUnit.MINUTES.toMillis(5);
+    private final long CACHE_INTERVAL = TimeUnit.MINUTES.toMillis(5);
 
     private final Thread cacheThread = new Thread(new Runnable() {
         @Override
@@ -58,8 +58,13 @@ public class TrendingDaoCacheService extends TrendingDaoService {
         TrendingCache trendingCache = TRENDING_CACHE.get(cacheKey);
         if(trendingCache == null){
             // update cache
-            trendingCache = getTrendingCache(timeCode, languageCode);
-            TRENDING_CACHE.put(cacheKey, trendingCache);
+            synchronized (TRENDING_CACHE) { // 双重锁定,缓解类似缓存击穿的效果,当大量请求同时请求同一个 cacheKey 时,造成大量的 db 访问
+                trendingCache = TRENDING_CACHE.get(cacheKey);
+                if(trendingCache == null) {
+                    trendingCache = getTrendingCache(timeCode, languageCode);
+                    TRENDING_CACHE.put(cacheKey, trendingCache);
+                }
+            }
         }
         return trendingCache.getTrendings();
     }
