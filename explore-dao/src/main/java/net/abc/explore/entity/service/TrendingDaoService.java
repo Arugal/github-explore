@@ -1,11 +1,14 @@
 package net.abc.explore.entity.service;
 
+import net.abc.explore.constant.ETimeCode;
 import net.abc.explore.entity.LanguageCode;
 import net.abc.explore.entity.Repositorie;
 import net.abc.explore.entity.TimeCode;
 import net.abc.explore.entity.Trending;
 import net.abc.explore.entity.dao.TrendingDao;
 import net.abc.tool.util.base.ObjectUtils;
+import net.abc.tool.util.date.DateUtil;
+import net.abc.tool.util.date.ETimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -66,8 +69,20 @@ public class TrendingDaoService {
             Collections.sort(trendings);
             int consecutiveDays = 0;
             Date lastTime = null;
+            ETimeCode timeCode = ETimeCode.getETimeCode(trending.getTimeCode());
+            Long mistiming = 0L;
+            boolean isMonth = false;
+            switch (timeCode){
+                case DEILY: mistiming = one_time; break;
+                case WEEKLY: mistiming = one_time * 7; break;
+                case MONTHLY: isMonth = true; break;
+                default: break;
+            }
             for(Trending formerly : trendings){
-                if(lastTime == null || lastTime.getTime() - formerly.getOccurTime().getTime() == one_time){
+                if(isMonth && lastTime != null){
+                    mistiming = lastTime.getTime() - DateUtil.addDate(lastTime, ETimeUnit.MONTH, -1).getTime();
+                }
+                if(lastTime == null || lastTime.getTime() - formerly.getOccurTime().getTime() == mistiming){
                     lastTime = formerly.getOccurTime();
                     consecutiveDays++;
                     if(consecutiveDays == 2){
