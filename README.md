@@ -1,1 +1,1 @@
-![demo](doc/demo.png)
+![demo](doc/page.png)
