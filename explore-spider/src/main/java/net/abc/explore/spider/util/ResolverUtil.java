@@ -3,9 +3,6 @@ package net.abc.explore.spider.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author: zhangwei
  * @date: 15:22/2019-01-04
@@ -40,5 +37,12 @@ public abstract class ResolverUtil {
             return onwer.substring(0, onwer.length() - 2);
         }
         return onwer;
+    }
+
+    public static String resolverLanguage(String code){
+        if(code.startsWith("c")){
+            return "c++";
+        }
+        return code;
     }
 }

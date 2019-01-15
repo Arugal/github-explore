@@ -46,7 +46,7 @@ public class TrendingPipeline implements Pipeline<TrendingBean> {
 
     private List<Trending> resolver(TrendingBean trendingBean){
 
-        LanguageCode languageCode = languageCodeCacheService.getLanguageCodeByName(trendingBean.getLanguages());
+        LanguageCode languageCode = languageCodeCacheService.getLanguageCodeByName(ResolverUtil.resolverLanguage(trendingBean.getLanguages()));
         TimeCode timeCode = timeCodeCacheService.getTimeCodeByName(trendingBean.getTime());
 
         short rank = 1;
