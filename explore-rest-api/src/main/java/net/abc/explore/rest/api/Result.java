@@ -1,8 +1,7 @@
 package net.abc.explore.rest.api;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.web.servlet.View;
+import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +11,7 @@ import java.util.Map;
  * @Description:
  * @Date: Created in 上午12:45 2018/5/15
  */
+@ToString
 public class Result implements java.io.Serializable {
 
     private static final long serialVersionUID = -7550423847540881334L;

@@ -28,8 +28,8 @@ public class WebConfiguration {
         return converter;
     }
 
-    @Bean
-    public GlobalHandlerExeceptionResolver globalHandlerExeceptionResolver(){
-       return new GlobalHandlerExeceptionResolver();
-    }
+//    @Bean
+//    public GlobalHandlerExeceptionResolver globalHandlerExeceptionResolver(){
+//       return new GlobalHandlerExeceptionResolver();
+//    }
 }
