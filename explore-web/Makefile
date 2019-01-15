@@ -1,7 +1,7 @@
 install:
-	@npm install
+	npm install
 dev: install
-	@npm run dev
+	npm run dev
 
 deploy: nowtime
 	npm run build && \
