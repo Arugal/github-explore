@@ -55,7 +55,11 @@
             </div>
             <div class="f6 text-gray mt-2">
               <span class="d-inline-block mr-3">
-                <span class="repo-language-color ml-0" v-bind:style="languageSpan" style="position: relative; top:-0.5px"></span>
+                <span
+                  class="repo-language-color ml-0"
+                  v-bind:style="languageSpan"
+                  style="position: relative; top:-0.5px"
+                ></span>
                 <span itemprop="programmingLanguage">{{languageCodeAliasName}}</span>
               </span>
               
@@ -174,12 +178,26 @@ export default {
     };
   },
   methods: {
+    timeCodeAliasNameChange: function() {
+      this.timeCodeAliasName = this.timeCodeMap[this.timeCodeValue];
+    },
+    languageColorChange: function() {
+      this.languageSpan.backgroundColor = this.languageCodeMap[
+        this.languageCodeValue
+      ].color;
+    },
+    languageCodeAliasNameChange: function() {
+      this.languageCodeAliasName = this.languageCodeMap[
+        this.languageCodeValue
+      ].aliasName;
+    },
     timeCode: function() {
       get("constant/timeCode").then(response => {
         this.timeCodes = response.data.timeCode;
         this.timeCodes.forEach(element => {
           this.timeCodeMap[element.name] = element.aliasName;
         });
+        this.timeCodeAliasNameChange();
       });
     },
     languageCode: function() {
@@ -191,15 +209,17 @@ export default {
             aliasName: element.aliasName
           };
         });
+        this.languageCodeAliasNameChange()
+        this.languageColorChange()
       });
     },
     codeInitByCookie: function() {
       var cookieTimeCode = getCookie(cookieTimeCodeName);
-      if (cookieTimeCode != undefined && cookieTimeCode != '') {
+      if (cookieTimeCode != undefined && cookieTimeCode != "") {
         this.timeCodeValue = cookieTimeCode;
       }
       var cookieLanguageCode = getCookie(cookieLanguageCodeName);
-      if (cookieLanguageCode != undefined && cookieLanguageCode != '') {
+      if (cookieLanguageCode != undefined && cookieLanguageCode != "") {
         this.languageCodeValue = cookieLanguageCode;
       }
     },
@@ -214,17 +234,13 @@ export default {
       this.trending();
     },
     languageCodeChange: function() {
-      this.languageSpan.backgroundColor = this.languageCodeMap[
-        this.languageCodeValue
-      ].color;
-      this.languageCodeAliasName = this.languageCodeMap[
-        this.languageCodeValue
-      ].aliasName;
+      this.languageColorChange();
+      this.languageCodeAliasNameChange();
       setCookie(cookieLanguageCodeName, this.languageCodeValue, cookieTimeOut);
       this.codeChange();
     },
     timeCodeChange: function() {
-      this.timeCodeAliasName = this.timeCodeMap[this.timeCodeValue];
+      this.timeCodeAliasNameChange();
       setCookie(cookieTimeCodeName, this.timeCodeValue, cookieTimeOut);
       this.codeChange();
     }
@@ -366,9 +382,8 @@ a {
   width: 15px;
   position: relative;
   top: 3px;
-  
 }
-svg{
+svg {
   position: relative;
   top: 2px;
 }
