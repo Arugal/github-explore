@@ -6,7 +6,7 @@ var axiosi = axios.create({
         'Content-Type': 'application/json',
     },
     timeout: 30000,
-    baseURL: 'http://192.168.0.127:9010'
+    baseURL: 'http://www.sunnus3.top'
 })
 
 // 请求拦截器

@@ -133,6 +133,7 @@
                 <artifactId>jackson-module-jaxb-annotations</artifactId>
                 <version>${jackcon.version}</version>
             </dependency>
+            
         </dependencies>
     </dependencyManagement>
 
