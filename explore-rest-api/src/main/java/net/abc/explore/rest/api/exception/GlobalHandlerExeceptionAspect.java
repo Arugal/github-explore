@@ -21,6 +21,7 @@ public class GlobalHandlerExeceptionAspect {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalHandlerExeceptionAspect.class);
 
+    private static final String X_Real_IP = "X-Real-IP";
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void controller(){}
@@ -31,17 +32,16 @@ public class GlobalHandlerExeceptionAspect {
         if(log.isInfoEnabled()){
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = attributes.getRequest();
-            log.info("url={},method={},ip={},handler={}.{},args={}",
-                    request.getRequestURI(), request.getMethod(), request.getRemoteAddr(), joinPoint.getSignature().getDeclaringTypeName(),
+            log.info("url={},method={},remote-ip={},handler={}.{},args={}",
+                    request.getRequestURI(), request.getMethod(), request.getHeader(X_Real_IP), joinPoint.getSignature().getDeclaringTypeName(),
                     joinPoint.getSignature().getName(), joinPoint.getArgs());
         }
     }
 
-    @AfterReturning("controller()")
-    public void after(JoinPoint joinPoint){
+    @AfterReturning(pointcut = "controller()", returning = "result")
+    public void after(JoinPoint joinPoint, Object result){
         if(log.isDebugEnabled()){
-           Result result = resultByArgs(joinPoint.getArgs());
-           log.debug("handler={}.{},args={},resul={}",
+           log.debug("handler={}.{},args={},result={}",
                    joinPoint.getSignature().getDeclaringTypeName(),joinPoint.getSignature().getName(), result.toString());
         }
     }
