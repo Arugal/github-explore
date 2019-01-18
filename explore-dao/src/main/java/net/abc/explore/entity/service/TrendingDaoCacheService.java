@@ -1,6 +1,7 @@
 package net.abc.explore.entity.service;
 
 import lombok.NoArgsConstructor;
+import net.abc.explore.entity.LanguageCode;
 import net.abc.explore.entity.TimeCode;
 import net.abc.explore.entity.Trending;
 import org.apache.commons.logging.Log;
@@ -8,9 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +25,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Lazy
 public class TrendingDaoCacheService extends TrendingDaoService {
 
+    /**
+     * 缓存 Trending 的查询结果
+     */
     private final Map<String, TrendingCache> TRENDING_CACHE = new ConcurrentHashMap<>();
+
+    /**
+     * 缓存所有 cache key
+     * 1. 防止缓存穿透 （类似 布隆过滤器）
+     * 2. 降低锁的粒度  (cache 为单位加锁)
+     */
+    private final Map<String, Object> CACHE_KEYS = new HashMap<>();
+
+    private final List<Trending> EMPTY_LIST = new ArrayList<>(0);
 
     private static final Log log = LogFactory.getLog(TrendingDaoCacheService.class);
 
@@ -46,27 +57,40 @@ public class TrendingDaoCacheService extends TrendingDaoService {
         }
     });
 
-    public TrendingDaoCacheService(){
+    public TrendingDaoCacheService(TimeCodeCacheService timeCodeCacheService, LanguageCodeCacheService languageCodeCacheService){
         cacheThread.setName("TrendingDaoCacheThread");
         cacheThread.setDaemon(true);
         cacheThread.start();
+        List<TimeCode> timeCodes = timeCodeCacheService.getAllTimeCode();
+        List<LanguageCode> languageCodes = languageCodeCacheService.getAllLanguageCode();
+        for(TimeCode timeCode : timeCodes){
+            String timeCodeName = timeCode.getName();
+            for(LanguageCode languageCode : languageCodes){
+                CACHE_KEYS.put(cacheKey(timeCodeName, languageCode.getName()), new Object());
+            }
+        }
     }
 
     @Override
     public List<Trending> getTrending(String timeCode, String languageCode) {
         String cacheKey = cacheKey(timeCode, languageCode);
-        TrendingCache trendingCache = TRENDING_CACHE.get(cacheKey);
-        if(trendingCache == null){
-            // update cache
-            synchronized (TRENDING_CACHE) { // 双重锁定,缓解类似缓存击穿的效果,当大量请求同时请求同一个 cacheKey 时,造成大量的 db 访问
-                trendingCache = TRENDING_CACHE.get(cacheKey);
-                if(trendingCache == null) {
-                    trendingCache = getTrendingCache(timeCode, languageCode);
-                    TRENDING_CACHE.put(cacheKey, trendingCache);
+        final Object lock = CACHE_KEYS.get(cacheKey);
+        if(lock != null){
+            TrendingCache trendingCache = TRENDING_CACHE.get(cacheKey);
+            if(trendingCache == null){
+                // update cache
+                // 双重锁定,缓解类似缓存击穿的效果,当大量请求同时请求同一个 cacheKey 时,过滤不必要的 db 访问
+                synchronized (lock) {
+                    trendingCache = TRENDING_CACHE.get(cacheKey);
+                    if(trendingCache == null) {
+                        trendingCache = getTrendingCache(timeCode, languageCode);
+                        TRENDING_CACHE.put(cacheKey, trendingCache);
+                    }
                 }
             }
+            return trendingCache.getTrendings();
         }
-        return trendingCache.getTrendings();
+        return EMPTY_LIST;
     }
 
     private static String cacheKey(String timeCode, String languageCode){
@@ -165,7 +189,7 @@ public class TrendingDaoCacheService extends TrendingDaoService {
         }
 
         public boolean hasRerence(){
-            return referenceIdx.get() != 0;
+            return referenceIdx.get() > 0;
         }
     }
 }
