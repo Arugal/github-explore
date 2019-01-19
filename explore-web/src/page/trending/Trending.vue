@@ -32,7 +32,7 @@
         </div>
       </el-row>
     </el-header>
-    <el-main style="height:80%">
+    <el-main style="height:80%;">
       <div id="trending-div" class="explore-content">
         <ul class="trending-ul repo-list">
           <li v-for="trending in trendings" class="trending-li" v-show="isNew || trending.new">
