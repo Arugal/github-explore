@@ -7,16 +7,16 @@
         定义相关实体类
    - explore-dao
    
-        定义相关 dao 类，实现相关 service 类，对 trending 查询结果，语言、时间常量使用了堆内缓存(spring mybatis)
+        定义相关 dao 类，实现相关 service 类，对 trending 查询结果，语言、时间常量使用了堆内缓存 (spring mybatis)
    - explore-rest-api
         
-        相关 rest 风格接口，(spring boot、spring mvc)
+        相关 rest 风格接口 (spring boot、spring mvc)
    - explore-web
         
         pc 端 web 界面（vue、element-ui）
    - explore-spider
     
-        爬虫实现(spring boot、gecco)
+        爬虫实现 (spring boot、gecco)
         
 ## 快速启动
    
