@@ -4,9 +4,10 @@ dev: install
 	npm run dev
 
 build_web:
-	@npm run build
+	rm -rf dist && \
+		npm run build
 
-deploy: nowtime build
+deploy: nowtime build_web
 		tar -zcvf dist.tar.gz dist &&\
 		scp -r ./dist.tar.gz root@dell.com:/root/explore/web/ &&\
 		scp Dockerfile root@dell.com:/root/explore/web/ &&\

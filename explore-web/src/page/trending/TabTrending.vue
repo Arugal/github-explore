@@ -71,7 +71,6 @@
                     </svg>
                     {{trending.star}}
                   </a>
-                  
                   <a
                     class="muted-link d-inline-block mr-3"
                     :href="'https://github.com/'+trending.repositorie.owner+'/'+trending.repositorie.name+'/network'"
@@ -93,7 +92,26 @@
                     </svg>
                     {{trending.fork}}
                   </a>
-                  <span class="d-inline-block float-sm-right mr-3">
+                  <!-- <span
+                    class="d-inline-block float-sm-right mr-3"
+                  >{{trending.consecutiveDays}} consecutive {{timeCodeValue}}</span>-->
+                  <span class="d-inline-block float-sm-right right-span">
+                    <span v-if="trending.lastRank == ''">
+                      <img src="../../../static/plus.png" class="status-img">
+                    </span>
+                    <span v-else-if="trending.lastRank > trending.rank">
+                      <!-- {{trending.lastRank - trending.rank}} -->
+                      <img src="../../../static/rise.png" class="status-img">
+                    </span>
+                    <span v-else-if="trending.lastRank < trending.rank">
+                      <!-- {{trending.rank - trending.lastRank}} -->
+                      <img src="../../../static/fall.png" class="status-img">
+                    </span>
+                    <span v-else>
+                      <img src="../../../static/line.png" class="status-img">
+                    </span>
+                  </span>
+                  <span class="d-inline-block float-sm-right mr-3 right-span">
                     <svg
                       class="octicon octicon-star"
                       viewBox="0 0 14 16"
@@ -109,25 +127,6 @@
                     </svg>
                     {{trending.newStar}} stars {{timeCodeAliasName}}
                   </span>
-                  <span
-                    class="d-inline-block float-sm-right mr-3"
-                  >{{trending.consecutiveDays}} consecutive {{timeCodeValue}}</span>
-                  <span class="d-inline-block float-sm-right">
-                    <span v-if="trending.lastRank == ''">
-                      <img src="../../../static/plus.png" class="status-img">
-                    </span>
-                    <span v-else-if="trending.lastRank > trending.rank">
-                      <img src="../../../static/rise.png" class="status-img">
-                      {{trending.lastRank - trending.rank}}
-                    </span>
-                    <span v-else-if="trending.lastRank < trending.rank">
-                      <img src="../../../static/fall.png" class="status-img">
-                      {{trending.rank - trending.lastRank}}
-                    </span>
-                    <span v-else>
-                      <img src="../../../static/line.png" class="status-img">
-                    </span>
-                  </span>
                 </div>
               </li>
               <li style="height:400px; text-align:center;" class="trending-li">
@@ -135,7 +134,7 @@
                   style=" position: relative; top: 50px;"
                   class="d-inline-block float-sm-right mr-3"
                 >
-                  <a href="https://github.com/Sunnus3">Are you the devil?</a>
+                  <a href="https://github.com/Sunnus3">Are you ok?</a>
                 </span>
               </li>
             </ul>
@@ -279,6 +278,7 @@ export default {
   overflow: hidden;
   height: 100%;
 }
+
 .el-select {
   line-height: 20px;
   position: relative;
@@ -308,12 +308,15 @@ export default {
   top: 1px;
   width: 12px;
 }
+
 .col-9 {
   width: 70%;
 }
+
 .col-12 {
   width: 12%;
 }
+
 .ml-0 {
   margin-left: 0 !important;
 }
@@ -328,9 +331,11 @@ export default {
   fill: currentColor;
   vertical-align: text-top;
 }
+
 .muted-link {
   color: #586069 !important;
 }
+
 .d-inline-block {
   display: inline-block !important;
 }
@@ -359,9 +364,11 @@ a {
 .text-gray {
   color: #586069 !important;
 }
+
 .pr-4 {
   padding-right: 24px !important;
 }
+
 .py-1 {
   padding-bottom: 4px !important;
   padding-top: 4px !important;
@@ -374,15 +381,22 @@ a {
 .explore-content {
   margin-top: -15px;
 }
+
 * {
   box-sizing: border-box;
 }
+
+.right-span {
+  float: right;
+}
+
 .status-img {
   height: 15px;
   width: 15px;
   position: relative;
   top: 3px;
 }
+
 svg {
   position: relative;
   top: 2px;
@@ -391,5 +405,9 @@ svg {
 .el-tabs__content {
   height: 1000px;
   overflow: scroll;
+}
+
+#trending-div{
+  padding: 0px;
 }
 </style>
