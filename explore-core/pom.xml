@@ -18,7 +18,7 @@
         </dependency>
 
         <dependency>
-            <groupId>net.abc.tool</groupId>
+            <groupId>com.github.sunnus3</groupId>
             <artifactId>common-tool</artifactId>
         </dependency>
     </dependencies>
