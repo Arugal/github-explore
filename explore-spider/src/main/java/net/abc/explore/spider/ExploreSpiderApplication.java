@@ -11,15 +11,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author: zhangwei
  * @date: 13:46/2019-01-01
  */
 @SpringBootApplication
+//@EnableTransactionManagement
 @Import(ExploreDAOApplication.class)
 public class ExploreSpiderApplication implements CommandLineRunner {
 

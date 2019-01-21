@@ -2,7 +2,7 @@ gecco:
   class-path: net.abc.explore.spider.gecco # gecco 扫描 HtmlBean 路径
   pipeline:
     print:
-      enabled: true
+      enabled: false
   n-threand: 4 # gecco 爬虫任务线程数量
 
 # mysql

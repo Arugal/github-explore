@@ -38,9 +38,7 @@ public class TrendingPipeline implements Pipeline<TrendingBean> {
 
     @Override
     public void process(TrendingBean trendingBean) {
-        List<Trending> trendings = resolver(trendingBean);
-        // update db
-        trendingProcess.process(trendings);
+       resolver(trendingBean);
     }
 
 
@@ -67,6 +65,9 @@ public class TrendingPipeline implements Pipeline<TrendingBean> {
             trendings.add(trending);
             rank ++;
         }
+
+        trendingProcess.processRepositore(trendings);
+        trendingProcess.processTrending(trendings, timeCode.getCode(), languageCode.getCode(), occurTime);
         return trendings;
     }
 }

@@ -2,6 +2,7 @@
    通过爬虫定时爬取 github 的 trending 内容并储存,加上历史排名信息后通过页面重新展示
 
 ## 模块说明
+
    - explore-core
    
         定义相关实体类
@@ -36,6 +37,7 @@
         修改 explore-web/src/common/js/axiosi.js 文件，根据实际情况修改 rest-api 地址
     
    （后期提供适用的 docker-compose、Makefile、Shell，目前且有 Dockerfile）
+   
 ## 样例
 [体验地址](http://www.sunnus3.top)
 ![demo](doc/page.png)
