@@ -29,7 +29,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.geccocrawler</groupId>
+            <groupId>com.github.sunnus3</groupId>
             <artifactId>gecco-spring-boot-starter</artifactId>
         </dependency>
 
