@@ -40,5 +40,5 @@
    （后期提供适用的 docker-compose、Makefile、Shell，目前且有 Dockerfile）
    
 ## 样例
-[体验地址](https://www.sunnus3.top)
+[~~体验地址~~](https://www.sunnus3.top)目前无法使用 frp 反向代理部署在局域网内的接口，暂时无法使用
 ![demo](doc/page.png)

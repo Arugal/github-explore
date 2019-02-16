@@ -8,7 +8,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * @author: zhangwei
@@ -24,9 +23,7 @@ public class GlobalHandlerExeceptionResolver implements HandlerExceptionResolver
         String msg = String.format("HandlerClass:%s , HandlerMethod:%s , exMeg:%s", method.getBeanType().getName(), method.getMethod().getName(), ex.getMessage());
         logger.error(msg, ex);
         ModelAndView modelAndView = new ModelAndView();
-        Map<String, Object> modelmap = modelAndView.getModelMap();
-        modelmap.put("msg", msg);
-        modelmap.put("ex", ex);
+        modelAndView.setViewName("404.html");
         return modelAndView;
     }
 }

@@ -1,5 +1,6 @@
 package net.abc.explore.rest.api;
 
+import net.abc.explore.rest.api.exception.GlobalHandlerExeceptionResolver;
 import net.abc.explore.rest.api.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +28,8 @@ public class WebConfiguration {
         return converter;
     }
 
-//    @Bean
-//    public GlobalHandlerExeceptionResolver globalHandlerExeceptionResolver(){
-//       return new GlobalHandlerExeceptionResolver();
-//    }
+    @Bean
+    public GlobalHandlerExeceptionResolver globalHandlerExeceptionResolver(){
+       return new GlobalHandlerExeceptionResolver();
+    }
 }

@@ -1,6 +1,7 @@
 package net.abc.explore.rest.api.exception;
 
 import net.abc.explore.rest.api.Result;
+import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -46,7 +47,13 @@ public class GlobalHandlerExeceptionAspect {
         }
     }
 
-    @AfterThrowing(pointcut = "controller()", throwing = "ex")
+    /**
+     * 此处使用错误,查看源码发现 spring aop 无法将异常藏匿，当异常发生时，调用切入点后依然会抛出
+     * {@link org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor#invoke(MethodInvocation)}
+     * @param joinPoint
+     * @param ex
+     */
+//    @AfterThrowing(pointcut = "controller()", throwing = "ex")
     public void afterThrowing(JoinPoint joinPoint, Exception ex){
         log.error(String.format("handler=%s.%s,args=%s,ex=%s",joinPoint.getSignature().getDeclaringTypeName(),joinPoint.getSignature().getName(), ex.getMessage()),
                 ex);
