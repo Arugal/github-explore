@@ -28,11 +28,15 @@
         
         创建 mysql 实例，执行 sql/db.sql 脚本 （后期索引有待优化）
    - explore-spider
-    
+        
         修改 explore-spider/src/main/resources/application.yml 文件，根据实际情况修改数据库参数
+        
+        通过 docker 部署时使用 mvn -DskipTests=true install -Pspider-deploy 命令编译项目
    - explore-rest-api
         
         修改 explore-rest-api/src/main/resources/application.yml 文件，根据实际情况修改 servlet 容器监听端口和数据库参数
+        
+        通过 docker 部署时使用 mvn -DskipTests=true install -Pspider-deploy 命令编译项目
    - explore-web
 
         修改 explore-web/src/common/js/axiosi.js 文件，根据实际情况修改 rest-api 地址
