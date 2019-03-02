@@ -26,7 +26,7 @@
    
    - mysql
         
-        创建 mysql 实例，执行 sql/db.sql 脚本 （后期索引有待优化）
+        创建 ![mysql](mysql) 实例，执行 sql/db.sql 脚本 （后期索引有待优化
    - explore-spider
         
         修改 explore-spider/src/main/resources/application.yml 文件，根据实际情况修改数据库参数
