@@ -36,6 +36,6 @@ public class ExploreSpiderApplicationTest {
 
     @Test
     public void geccoGithub(){
-        group.executor("https://github.com/trending/java?since=weekly");
+        group.executor("https://github.com/trending/java?since=daily");
     }
 }

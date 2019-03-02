@@ -23,7 +23,7 @@ public class RepositorieDaoService {
             /**
              * repositorie 在其他线程中已经新增,此时重新查询即可
              *
-             * 主要由于 trending 与 repositorie 一对多的关系导致
+             * 主要由于 trending 与 repositorie 多对一的关系导致
              */
             if(ex instanceof DuplicateKeyException){
                 if(ex.getMessage().contains("Duplicate entry")){

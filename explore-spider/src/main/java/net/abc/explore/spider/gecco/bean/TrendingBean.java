@@ -24,7 +24,8 @@ public class TrendingBean implements HtmlBean {
     @RequestParameter("time")
     private String time;
 
+
     @Html
-    @HtmlField(cssPath = "body > div.application-main > div.explore-pjax-container.container-lg.p-responsive.clearfix > div > div.col-md-9.float-md-left > div.explore-content > ol > li")
+    @HtmlField(cssPath = "body > div.application-main > main > div.explore-pjax-container.container-lg.p-responsive.clearfix > div > div.col-md-9.float-md-left > div.explore-content > ol > li")
     private List<RepositorieBean> repositories;
 }

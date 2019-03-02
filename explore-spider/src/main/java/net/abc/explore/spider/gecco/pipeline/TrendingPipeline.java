@@ -60,12 +60,10 @@ public class TrendingPipeline implements Pipeline<TrendingBean> {
             int star = ResolverUtil.resolverInt(repositorieBean.getStar());
             int fork = ResolverUtil.resolverInt(repositorieBean.getFork());
             int newStar = ResolverUtil.resolverInt(repositorieBean.getNewStar());
-            Trending trending = new Trending(occurTime, timeCode.getCode(), languageCode.getCode(), rank, star, fork, newStar);
+            Trending trending = new Trending(occurTime, timeCode.getCode(), languageCode.getCode(), rank++, star, fork, newStar);
             trending.setRepositorie(new Repositorie(languageCode.getCode(), owner, name, describe, lastTime));
             trendings.add(trending);
-            rank ++;
         }
-
         trendingProcess.processRepositore(trendings);
         trendingProcess.processTrending(trendings, timeCode.getCode(), languageCode.getCode(), occurTime);
         return trendings;
