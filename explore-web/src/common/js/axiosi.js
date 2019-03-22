@@ -6,7 +6,7 @@ var axiosi = axios.create({
         'Content-Type': 'application/json',
     },
     timeout: 30000,
-    baseURL: 'http://www.example.top'
+    baseURL: 'http://example.top'
 })
 
 // 请求拦截器

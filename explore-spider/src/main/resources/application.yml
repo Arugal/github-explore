@@ -9,7 +9,7 @@ gecco:
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://192.168.31.108:3306/github_explore?characterEncoding=utf-8
+      url: jdbc:mysql://192.168.9.80:3306/github_explore?characterEncoding=utf-8
       username: root
       password: root.2019
       driver-class-name: com.mysql.jdbc.Driver

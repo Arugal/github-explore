@@ -1,19 +1,33 @@
 FROM hengyunabc/arthas
 
-COPY target/explore-rest-api-1.0-SNAPSHOT.jar /home/explore-rest-api.jar
+MAINTAINER zhangwei/pknfe@outlook.com
 
-COPY target/lib /home/lib/
+# 服务名称
+ARG APP_NAME=explore-rest-api
+# 服务目录
+ARG SERVER_HOME=/usr/${APP_NAME}
+# 启动脚本名称
+ARG SHELL_SCRIPT=docker-entrypoint.sh
+# jar包名称
+ARG JAR_NAME=explore-rest-api-1.0-SNAPSHOT.jar
+# jar包所在目录
+ARG JAR_DIR=.
 
-COPY docker-entrypoint.sh /home/docker-entrypoint.sh
+# copy jar包和相关依赖
+COPY ${JAR_DIR}/${JAR_NAME} ${SERVER_HOME}/${JAR_NAME}
+COPY ${JAR_DIR}/lib ${SERVER_HOME}/lib/
 
-RUN chmod +x /home/docker-entrypoint.sh
+# add docker-entrypoint.sh脚本
+ADD https://raw.githubusercontent.com/Arugal/fragment/master/docker/${SHELL_SCRIPT} ${SERVER_HOME}/${SHELL_SCRIPT}
 
-WORKDIR /home
+ENV JAR_NAME=${JAR_NAME}
+
+ENV REMOTE_DEBUG_PORT=20002
+
+WORKDIR ${SERVER_HOME}
+
+RUN chmod +x ${SHELL_SCRIPT}
 
 RUN echo "Asia/Shanghai" > /etc/timezone
 
-EXPOSE 9010
-
-EXPOSE 5005
-
-ENTRYPOINT ["/home/docker-entrypoint.sh", "explore-rest-api.jar"]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
