@@ -3,4 +3,4 @@ clean:
 install: clean
 	@mvn install -Dmaven.test.skip=true
 
-all: clean install
+.PHONY:	clean install
