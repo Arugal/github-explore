@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Sunnus3/github-explore.svg?branch=master)](https://travis-ci.org/Sunnus3/github-explore)
+[![Build Status](https://travis-ci.org/Arugal/github-explore.svg?branch=master)
 ## github-explore
    通过爬虫定时爬取 github 的 trending 内容并储存,加上历史排名信息后通过页面重新展示
 
