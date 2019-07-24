@@ -6,12 +6,6 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @Author: henry
- * @Description:
- * @Company: 上海博般数据技术有限公司
- * @Date: Created in 10:34 2018/3/2.
- */
 @Component
 public class CorsFilter implements Filter {
 
