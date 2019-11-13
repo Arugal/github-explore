@@ -27,7 +27,7 @@
         <druid.version>1.1.9</druid.version>
         <tool.version>0.1</tool.version>
         <swagger.spring.boot>1.5.1.RELEASE</swagger.spring.boot>
-        <jackcon.version>2.9.8</jackcon.version>
+        <jackcon.version>2.10.1</jackcon.version>
         <java.main.class>Main</java.main.class>
     </properties>
 
